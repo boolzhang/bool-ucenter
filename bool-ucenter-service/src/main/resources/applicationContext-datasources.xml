@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+		http://www.springframework.org/schema/beans/spring-beans.xsd   
+		http://www.springframework.org/schema/context   
+		http://www.springframework.org/schema/context/spring-context.xsd   
+		http://www.springframework.org/schema/tx   
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task.xsd 
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+
+    <!-- 资源管理映射 -->
+    <bean id="ucDataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+	    <property name="username" value="${db.ucenter.user}" />
+		<property name="password" value="${db.ucenter.pass}" />
+		<property name="url" value="${db.ucenter.url}" />
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="filters" value="stat" />
+		<property name="maxActive" value="20" />
+		<property name="initialSize" value="1" />
+		<property name="maxWait" value="60000" />
+		<property name="minIdle" value="1" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="validationQuery" value="SELECT 'x'" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxPoolPreparedStatementPerConnectionSize" value="50" />
+	</bean>
+    
+    <bean id="ucSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ucDataSource" />
+		<!-- <property name="configLocation" value="classpath:MyBatisConfig.xml"></property> -->
+	</bean>
+
+    <bean id="ucMapperInterface" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="sqlSessionFactoryBeanName" value="ucSqlSessionFactory" />
+    	<property name="basePackage" value="com.bool.ucenter.**.mapper"></property>
+    </bean>
+    
+    <bean id="ucTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="ucDataSource"></property>
+    	<qualifier value="ucenter"></qualifier>
+    </bean>
+    
+	
+</beans>

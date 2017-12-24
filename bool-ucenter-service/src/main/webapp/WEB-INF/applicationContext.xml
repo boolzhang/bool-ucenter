@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+		http://www.springframework.org/schema/beans/spring-beans.xsd   
+		http://www.springframework.org/schema/context   
+		http://www.springframework.org/schema/context/spring-context.xsd   
+		http://www.springframework.org/schema/tx   
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/task 
+		http://www.springframework.org/schema/task/spring-task.xsd 
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+		
+		
+	<!-- 导入属性配置文件 -->
+	<context:property-placeholder location="classpath*:*.properties" />
+	
+	<!-- 扫描包-->
+	<context:component-scan base-package="com.bool.ucenter"/> 
+	
+	<!-- 对注解的支持 -->
+	<context:annotation-config/>
+
+	<!-- 开启Spring的注解事务 -->
+    <tx:annotation-driven />
+    
+    <!-- 自动AOP代理:expose-proxy:true 内部调用也拦截-->
+	<aop:aspectj-autoproxy expose-proxy="true"/>
+	
+    <!-- 导入配置文件 -->
+	<import resource="classpath*:applicationContext-*.xml"/>
+    
+</beans>

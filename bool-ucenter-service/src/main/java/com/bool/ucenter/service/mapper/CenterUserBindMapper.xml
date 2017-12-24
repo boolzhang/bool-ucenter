@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bool.ucenter.service.mapper.CenterUserBindMapper">
+  <resultMap id="BaseResultMap" type="com.bool.ucenter.service.entity.CenterUserBind">
+    <id column="thirdPlatform" jdbcType="INTEGER" property="thirdPlatform" />
+    <id column="thirdUserId" jdbcType="VARCHAR" property="thirdUserId" />
+    <result column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="bindTime" jdbcType="TIMESTAMP" property="bindTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    thirdPlatform, thirdUserId, userId, bindTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.bool.ucenter.service.entity.CenterUserBindKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from uc_bind
+    where thirdPlatform = #{thirdPlatform,jdbcType=INTEGER}
+      and thirdUserId = #{thirdUserId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.bool.ucenter.service.entity.CenterUserBindKey">
+    delete from uc_bind
+    where thirdPlatform = #{thirdPlatform,jdbcType=INTEGER}
+      and thirdUserId = #{thirdUserId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bool.ucenter.service.entity.CenterUserBind">
+    insert into uc_bind (thirdPlatform, thirdUserId, userId, 
+      bindTime)
+    values (#{thirdPlatform,jdbcType=INTEGER}, #{thirdUserId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{bindTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bool.ucenter.service.entity.CenterUserBind">
+    insert into uc_bind
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="thirdPlatform != null">
+        thirdPlatform,
+      </if>
+      <if test="thirdUserId != null">
+        thirdUserId,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="bindTime != null">
+        bindTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="thirdPlatform != null">
+        #{thirdPlatform,jdbcType=INTEGER},
+      </if>
+      <if test="thirdUserId != null">
+        #{thirdUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bindTime != null">
+        #{bindTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bool.ucenter.service.entity.CenterUserBind">
+    update uc_bind
+    <set>
+      <if test="userId != null">
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bindTime != null">
+        bindTime = #{bindTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where thirdPlatform = #{thirdPlatform,jdbcType=INTEGER}
+      and thirdUserId = #{thirdUserId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bool.ucenter.service.entity.CenterUserBind">
+    update uc_bind
+    set userId = #{userId,jdbcType=INTEGER},
+      bindTime = #{bindTime,jdbcType=TIMESTAMP}
+    where thirdPlatform = #{thirdPlatform,jdbcType=INTEGER}
+      and thirdUserId = #{thirdUserId,jdbcType=VARCHAR}
+  </update>
+</mapper>
