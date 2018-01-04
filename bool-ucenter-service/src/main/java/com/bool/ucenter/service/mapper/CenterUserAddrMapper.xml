@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bool.ucenter.service.mapper.CenterUserAddrMapper">
-  <resultMap id="BaseResultMap" type="com.bool.ucenter.service.entity.CenterUserAddr">
+  <resultMap id="BaseResultMap" type="com.bool.ucenter.core.entity.CenterUserAddr">
     <id column="addrId" jdbcType="INTEGER" property="addrId" />
     <result column="userId" jdbcType="INTEGER" property="userId" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="isDefault" jdbcType="CHAR" property="isDefault" />
+    <result column="isDefault" jdbcType="INTEGER" property="isDefault" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
   </resultMap>
   <sql id="Base_Column_List">
-    addrId, userId, address, isDefault
+    addrId, userId, address, isDefault, contact, mobile
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,13 +22,13 @@
     delete from uc_addr
     where addrId = #{addrId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="addrId" keyProperty="addrId" parameterType="com.bool.ucenter.service.entity.CenterUserAddr" useGeneratedKeys="true">
-    insert into uc_addr (userId, address, isDefault
-      )
-    values (#{userId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{isDefault,jdbcType=CHAR}
-      )
+  <insert id="insert" keyColumn="addrId" keyProperty="addrId" parameterType="com.bool.ucenter.core.entity.CenterUserAddr" useGeneratedKeys="true">
+    insert into uc_addr (userId, address, isDefault, 
+      contact, mobile)
+    values (#{userId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{isDefault,jdbcType=INTEGER}, 
+      #{contact,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="addrId" keyProperty="addrId" parameterType="com.bool.ucenter.service.entity.CenterUserAddr" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="addrId" keyProperty="addrId" parameterType="com.bool.ucenter.core.entity.CenterUserAddr" useGeneratedKeys="true">
     insert into uc_addr
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -38,6 +40,12 @@
       <if test="isDefault != null">
         isDefault,
       </if>
+      <if test="contact != null">
+        contact,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -47,11 +55,17 @@
         #{address,jdbcType=VARCHAR},
       </if>
       <if test="isDefault != null">
-        #{isDefault,jdbcType=CHAR},
+        #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bool.ucenter.service.entity.CenterUserAddr">
+  <update id="updateByPrimaryKeySelective" parameterType="com.bool.ucenter.core.entity.CenterUserAddr">
     update uc_addr
     <set>
       <if test="userId != null">
@@ -61,16 +75,24 @@
         address = #{address,jdbcType=VARCHAR},
       </if>
       <if test="isDefault != null">
-        isDefault = #{isDefault,jdbcType=CHAR},
+        isDefault = #{isDefault,jdbcType=INTEGER},
+      </if>
+      <if test="contact != null">
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
       </if>
     </set>
     where addrId = #{addrId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bool.ucenter.service.entity.CenterUserAddr">
+  <update id="updateByPrimaryKey" parameterType="com.bool.ucenter.core.entity.CenterUserAddr">
     update uc_addr
     set userId = #{userId,jdbcType=INTEGER},
       address = #{address,jdbcType=VARCHAR},
-      isDefault = #{isDefault,jdbcType=CHAR}
+      isDefault = #{isDefault,jdbcType=INTEGER},
+      contact = #{contact,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR}
     where addrId = #{addrId,jdbcType=INTEGER}
   </update>
 </mapper>

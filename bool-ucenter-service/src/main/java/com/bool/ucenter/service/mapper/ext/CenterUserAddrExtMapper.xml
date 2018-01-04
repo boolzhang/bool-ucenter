@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bool.ucenter.service.mapper.ext.CenterUserAddrExtMapper">
+  
+  
+  <select id="findAddrList" resultMap="com.bool.ucenter.service.mapper.CenterUserAddrMapper.BaseResultMap">
+  	SELECT * FROM `uc_addr` WHERE userId=#{userId};
+  </select>
+  
+  <select id="findDefault" resultMap="com.bool.ucenter.service.mapper.CenterUserAddrMapper.BaseResultMap">
+  	SELECT * FROM `uc_addr` WHERE userId=#{userId} ORDER BY `isDefault` DESC LIMIT 1;
+  </select>
+  
+  <update id="clearDefault">
+  	UPDATE `uc_addr` SET isDefault=0 WHERE isDefault=1 AND userId=#{userId};
+  </update>
+
+</mapper>

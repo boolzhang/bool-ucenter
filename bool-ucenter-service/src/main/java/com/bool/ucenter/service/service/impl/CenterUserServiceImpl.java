@@ -2,13 +2,19 @@ package com.bool.ucenter.service.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bool.jutils.pass.PassHandler;
 import com.bool.jutils.pass.PassInfo;
+import com.bool.ucenter.core.entity.CenterUser;
+import com.bool.ucenter.core.entity.CenterUserAddr;
+import com.bool.ucenter.core.entity.CenterUserBind;
 import com.bool.ucenter.core.enums.ThirdPlatform;
 import com.bool.ucenter.core.enums.UserState;
 import com.bool.ucenter.core.exceptions.MobileAlreadyExistsException;
@@ -20,10 +26,10 @@ import com.bool.ucenter.core.exceptions.UserNotExistsException;
 import com.bool.ucenter.core.mongo.UserSession;
 import com.bool.ucenter.core.mongo.UserSessionRepository;
 import com.bool.ucenter.core.service.CenterUserService;
-import com.bool.ucenter.service.entity.CenterUser;
-import com.bool.ucenter.service.entity.CenterUserBind;
+import com.bool.ucenter.service.mapper.CenterUserAddrMapper;
 import com.bool.ucenter.service.mapper.CenterUserBindMapper;
 import com.bool.ucenter.service.mapper.CenterUserMapper;
+import com.bool.ucenter.service.mapper.ext.CenterUserAddrExtMapper;
 import com.bool.ucenter.service.mapper.ext.CenterUserExtMapper;
 
 @Service
@@ -37,6 +43,14 @@ public class CenterUserServiceImpl implements CenterUserService {
 	
 	@Autowired
 	private CenterUserExtMapper centerUserExtMapper;
+	
+	@Autowired
+	private CenterUserAddrExtMapper centerUserAddrExtMapper;
+	
+	@Autowired
+	private CenterUserAddrMapper centerUserAddrMapper;
+	
+	
 	
 	@Autowired
 	private UserSessionRepository userSessionRepository;
@@ -100,6 +114,25 @@ public class CenterUserServiceImpl implements CenterUserService {
 
 		//返回会话
 		return this.generateSession(user);
+	}
+	
+	@Override
+	public void bindMobile(int userId, String mobile, String inputSms, String savedSms)
+			throws MobileAlreadyExistsException, MobileSMSIncorrectException, Exception {
+		if(!inputSms.equals(savedSms)) {
+			throw new MobileSMSIncorrectException();
+		}
+		
+		CenterUser user = new CenterUser();
+		user.setUserId(userId);
+		user.setMobile(mobile);
+		
+		try {
+			centerUserMapper.updateByPrimaryKeySelective(user);
+		}catch(DuplicateKeyException e) {
+			throw new MobileAlreadyExistsException();
+		}
+		
 	}
 
 	@Override
@@ -272,6 +305,86 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 		return session;
 	}
+
+	@Override
+	public List<CenterUserAddr> findAddrs(int userId) throws Exception {
+		return centerUserAddrExtMapper.findAddrList(userId);
+	}
+
+	@Transactional(value="ucenter" , rollbackFor=Exception.class)
+	@Override
+	public int saveAddr(int userId, String address, String mobile, String contact , int isDefault) throws Exception {
+		
+		
+		
+		if(isDefault==1) {
+			centerUserAddrExtMapper.clearDefault(userId);
+		}
+		
+		CenterUserAddr addr = new CenterUserAddr();
+		addr.setAddress(address);
+		addr.setContact(contact);
+		addr.setMobile(mobile);
+		addr.setUserId(userId);
+		addr.setIsDefault(0);
+		addr.setIsDefault(isDefault);
+		centerUserAddrMapper.insertSelective(addr);
+		
+		return addr.getAddrId();
+	}
+
+	@Transactional(value="ucenter" , rollbackFor=Exception.class)
+	@Override
+	public void updateAddr(int addrId, int userId, String address, String mobile, String contact, int isDefault)
+			throws Exception {
+		
+		CenterUserAddr addr = centerUserAddrMapper.selectByPrimaryKey(addrId);
+		
+
+		if(!addr.getUserId().equals(userId)) {
+			throw new Exception("您无权修改此地址！");
+		}
+		
+		if(isDefault==1) {
+			centerUserAddrExtMapper.clearDefault(userId);
+		}
+		
+		addr.setAddress(address);
+		addr.setContact(contact);
+		addr.setMobile(mobile);
+		addr.setIsDefault(isDefault);
+		
+		centerUserAddrMapper.updateByPrimaryKeySelective(addr);
+		
+		
+	}
+
+	@Override
+	public CenterUserAddr findAddrDetail(int addrId, int userId) throws Exception {
+
+		CenterUserAddr addr = centerUserAddrMapper.selectByPrimaryKey(addrId);
+		if(addr!=null && !addr.getUserId().equals(userId)) {
+			throw new Exception("您无权查看此地址！");
+		}
+		return addr;
+	}
+
+	@Override
+	public void deleteAddr(int addrId, int userId) throws Exception {
+		
+		CenterUserAddr addr = this.findAddrDetail(addrId, userId);
+		
+		if(addr!=null) {
+			centerUserAddrMapper.deleteByPrimaryKey(addrId);
+		}
+	}
+
+	@Override
+	public CenterUserAddr findDefault(int userId) throws Exception {
+		return centerUserAddrExtMapper.findDefault(userId);
+	}
+
+	
 
 	
 

@@ -7,6 +7,8 @@
     <classPathEntry
             location="C:\Users\jiaoy\.m2\repository\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar"/>
     <context id="my" targetRuntime="MyBatis3">
+    
+    	<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>  
         <commentGenerator>
             <property name="suppressDate" value="false"/>
             <property name="suppressAllComments" value="true"/>
@@ -16,8 +18,8 @@
                         connectionURL="jdbc:mysql://localhost:3306/uc_ucenter" userId="root"
                         password="root"/>
 
-        <javaModelGenerator targetPackage="com.bool.ucenter.service.entity"
-                            targetProject="bool-ucenter-service/src/main/java">
+        <javaModelGenerator targetPackage="com.bool.ucenter.core.entity"
+                            targetProject="bool-ucenter-core/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>

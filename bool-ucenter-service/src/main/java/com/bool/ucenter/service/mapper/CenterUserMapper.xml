@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bool.ucenter.service.mapper.CenterUserMapper">
-  <resultMap id="BaseResultMap" type="com.bool.ucenter.service.entity.CenterUser">
+  <resultMap id="BaseResultMap" type="com.bool.ucenter.core.entity.CenterUser">
     <id column="userId" jdbcType="INTEGER" property="userId" />
     <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="nickName" jdbcType="VARCHAR" property="nickName" />
@@ -29,7 +29,7 @@
     delete from uc_user
     where userId = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="userId" keyProperty="userId" parameterType="com.bool.ucenter.service.entity.CenterUser" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="userId" keyProperty="userId" parameterType="com.bool.ucenter.core.entity.CenterUser" useGeneratedKeys="true">
     insert into uc_user (mobile, nickName, sex, 
       avatar, passwd, passKey, 
       createTime, lastLoginTime, appId, 
@@ -39,7 +39,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{appId,jdbcType=INTEGER}, 
       #{trackId,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" keyColumn="userId" keyProperty="userId" parameterType="com.bool.ucenter.service.entity.CenterUser" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="userId" keyProperty="userId" parameterType="com.bool.ucenter.core.entity.CenterUser" useGeneratedKeys="true">
     insert into uc_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="mobile != null">
@@ -112,7 +112,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bool.ucenter.service.entity.CenterUser">
+  <update id="updateByPrimaryKeySelective" parameterType="com.bool.ucenter.core.entity.CenterUser">
     update uc_user
     <set>
       <if test="mobile != null">
@@ -151,7 +151,7 @@
     </set>
     where userId = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.bool.ucenter.service.entity.CenterUser">
+  <update id="updateByPrimaryKey" parameterType="com.bool.ucenter.core.entity.CenterUser">
     update uc_user
     set mobile = #{mobile,jdbcType=VARCHAR},
       nickName = #{nickName,jdbcType=VARCHAR},

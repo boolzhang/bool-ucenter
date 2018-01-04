@@ -1,7 +1,7 @@
 package com.bool.ucenter.service.mapper;
 
-import com.bool.ucenter.service.entity.CenterUserBind;
-import com.bool.ucenter.service.entity.CenterUserBindKey;
+import com.bool.ucenter.core.entity.CenterUserBind;
+import com.bool.ucenter.core.entity.CenterUserBindKey;
 
 public interface CenterUserBindMapper {
     int deleteByPrimaryKey(CenterUserBindKey key);

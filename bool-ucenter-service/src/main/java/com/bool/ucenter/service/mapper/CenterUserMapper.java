@@ -1,6 +1,6 @@
 package com.bool.ucenter.service.mapper;
 
-import com.bool.ucenter.service.entity.CenterUser;
+import com.bool.ucenter.core.entity.CenterUser;
 
 public interface CenterUserMapper {
     int deleteByPrimaryKey(Integer userId);
