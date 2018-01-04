@@ -67,12 +67,12 @@ public class CenterUserServiceImpl implements CenterUserService {
 		}
 		
 		if(session.getSessionOverDue().before(new Date())) {
-			//¹ıÆÚÁË£¬Ê§Ğ§
+			//åˆ é™¤ä¼šè¯
 			userSessionRepository.delete(token);
 			throw new TokenOverdueException();
 		}
 		
-		//Ê§Ğ§Ê±¼ä2Ìì
+		//è®¾ç½®ä¼šè¯æœ‰æ•ˆæœŸ
 		Calendar cl = Calendar.getInstance();
 		cl.setTime(new Date());
 		cl.add(Calendar.DATE, 2);
@@ -109,10 +109,10 @@ public class CenterUserServiceImpl implements CenterUserService {
 			throw new MobileSMSIncorrectException();
 		}
 		
-		//±£´æÓÃ»§
+		//ä¿å­˜ç”¨æˆ·å¹¶è¿”å›ä¿¡æ¯
 		CenterUser user = this.saveUser(mobile, pass, pass, null);
 
-		//·µ»Ø»á»°
+		//äº§ç”Ÿä¼šè¯ä¿¡æ¯
 		return this.generateSession(user);
 	}
 	
@@ -145,19 +145,19 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 		CenterUserBind bind = centerUserBindMapper.selectByPrimaryKey(key);
 		
-		//Ê×´ÎµÇÂ¼£¬Î´°ó¶¨µÄ
+		//æ–°ç”¨æˆ·
 		if(bind==null) {
 			
-			//±£´æÓÃ»§
+			//å‚æ•°ç”¨æˆ·ä¸­å¿ƒç”¨æˆ·
 			CenterUser user = this.saveUser(mobile, RandomStringUtils.randomAlphanumeric(12), thirdNickName, thirdAvatar);
 			
-			//±£´æ°ó¶¨¹ØÏµ
+			//äº§ç”Ÿç»‘å®šä¿¡æ¯
 			bind = key;
 			bind.setUserId(user.getUserId());
 			bind.setBindTime(new Date());
 			centerUserBindMapper.insertSelective(bind);
 			
-			//·µ»Ø»á»°
+			//è¿”å›ä¼šè¯
 			return this.generateSession(user);
 			
 			
@@ -177,7 +177,7 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 		CenterUser user = centerUserExtMapper.selectByMobile(mobile);
 		
-		//ÓÃ»§²»´æÔÚ
+		//ç”¨æˆ·æ‰¾ä¸åˆ°
 		if(user==null) {
 			throw new UserNotExistsException();
 		}
@@ -185,14 +185,14 @@ public class CenterUserServiceImpl implements CenterUserService {
 		PassInfo passInfo = PassHandler.buildPassword(newPsss);
 		user.setPasswd(passInfo.getPassword());
 		user.setPassKey(passInfo.getSalt());
-		//±£´æÓÃ»§
+		//æ›´æ–°ç”¨æˆ·ä¿¡æ¯
 		centerUserMapper.updateByPrimaryKeySelective(user);
 		
 	}
 	
 	
 	/**
-	 * ÓÃ»§µÇÂ¼
+	 * ç”¨æˆ·ç™»å½•
 	 * @param mobile
 	 * @param pass
 	 * @param checkPass
@@ -207,19 +207,12 @@ public class CenterUserServiceImpl implements CenterUserService {
 
 		CenterUser user = centerUserExtMapper.selectByMobile(mobile);
 		
-		//ÓÃ»§²»´æÔÚ
-		if(user==null) {
-			throw new UserNotExistsException();
-		}
-		
-		//ÓÃ»§×´Ì¬²»ÕıÈ·
-		if(UserState.ENABLED.getValue()!=user.getState()) {
-			throw new UserDisabledException();
-		}
+		//æ ¡éªŒç”¨æˆ·
+		this.checkState(user);
 		
 		
 		if(checkPass) {
-			//Ğ£ÑéÃÜÂë
+			//æ£€éªŒå¯†ç 
 			boolean check = PassHandler.checkPass(pass, user.getPassKey(), user.getPasswd());
 			
 			if(!check) {
@@ -227,16 +220,14 @@ public class CenterUserServiceImpl implements CenterUserService {
 			}
 		}
 		
-		//·µ»Ø»á»°
+		//äº§ç”Ÿä¼šè¯
 		return this.generateSession(user);
 	}
 	
 	
 	/**
-	 * ÓÃ»§µÇÂ¼
-	 * @param mobile
-	 * @param pass
-	 * @param checkPass
+	 * ç”¨æˆ·ç™»å½•
+	 * @param userId
 	 * @return
 	 * @throws UserNotExistsException
 	 * @throws UserDisabledException
@@ -248,22 +239,35 @@ public class CenterUserServiceImpl implements CenterUserService {
 
 		CenterUser user = centerUserMapper.selectByPrimaryKey(userId);
 		
-		//ÓÃ»§²»´æÔÚ
+		//æ ¡éªŒç”¨æˆ·
+		this.checkState(user);
+		
+		//äº§ç”Ÿä¼šè¯
+		return this.generateSession(user);
+	}
+	
+	
+	/**
+	 * é€šç”¨æ ¡éªŒç”¨æˆ·çŠ¶æ€
+	 * @param user
+	 * @throws UserNotExistsException
+	 * @throws UserDisabledException
+	 */
+	private void checkState(CenterUser user) throws UserNotExistsException, UserDisabledException {
+		
+		//ç”¨æˆ·ä¸å­˜åœ¨
 		if(user==null) {
 			throw new UserNotExistsException();
 		}
 		
-		//ÓÃ»§×´Ì¬²»ÕıÈ·
+		//çŠ¶æ€åˆ¤æ–­
 		if(UserState.ENABLED.getValue()!=user.getState()) {
 			throw new UserDisabledException();
 		}
-		
-		//¹¹½¨»á»°
-		return this.generateSession(user);
 	}
 	
 	/**
-	 * ±£´æÓÃ»§ĞÅÏ¢
+	 * ä¿å­˜ç”¨æˆ·
 	 * @param mobile
 	 * @param pass
 	 * @param nickName
@@ -283,7 +287,7 @@ public class CenterUserServiceImpl implements CenterUserService {
 		user.setLastLoginTime(new Date());
 		user.setCreateTime(new Date());
 		
-		//±£´æÓÃ»§
+		//ä¿å­˜
 		centerUserMapper.insertSelective(user);
 		
 		return user;
@@ -291,16 +295,16 @@ public class CenterUserServiceImpl implements CenterUserService {
 	}
 	
 	/**
-	 * ¸ù¾İÓÃ»§ĞÅÏ¢²úÉú±£´æsessionÊı¾İ²¢·µ»Ø
+	 * æ ¹æ®ç”¨æˆ·äº§ç”Ÿä¼šè¯
 	 * @param user
 	 * @return
 	 */
 	private UserSession generateSession(CenterUser user){
 		
-		//¹¹½¨»á»°
+		//äº§ç”Ÿä¼šè¯
 		UserSession session = new UserSession(user.getUserId() , user.getMobile() , user.getNickName() , user.getAvatar());
 		
-		//±£´æ»á»°
+		//ä¿å­˜åˆ°åº“
 		userSessionRepository.save(session);
 		
 		return session;
@@ -342,7 +346,7 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 
 		if(!addr.getUserId().equals(userId)) {
-			throw new Exception("ÄúÎŞÈ¨ĞŞ¸Ä´ËµØÖ·£¡");
+			throw new Exception("æ‚¨æ— æƒä¿®æ”¹æ­¤åœ°å€ï¼");
 		}
 		
 		if(isDefault==1) {
@@ -364,7 +368,7 @@ public class CenterUserServiceImpl implements CenterUserService {
 
 		CenterUserAddr addr = centerUserAddrMapper.selectByPrimaryKey(addrId);
 		if(addr!=null && !addr.getUserId().equals(userId)) {
-			throw new Exception("ÄúÎŞÈ¨²é¿´´ËµØÖ·£¡");
+			throw new Exception("åœ°å€ä¸å­˜åœ¨æˆ–æ— æƒæŸ¥çœ‹æ­¤åœ°å€ï¼");
 		}
 		return addr;
 	}
