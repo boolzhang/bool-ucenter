@@ -4,7 +4,7 @@
  
   <select id="selectByMobile" resultMap="com.bool.ucenter.service.mapper.CenterUserMapper.BaseResultMap">
    
-  SELECT `userId`,`mobile`,`nickName`,`passwd`,`passKey`,`avatar` FROM `uc_user` WHERE `mobile`=#{mobile};
+  SELECT `userId`,`mobile`,`nickName`,`passwd`,`passKey`,`avatar`,`state` FROM `uc_user` WHERE `mobile`=#{mobile};
    
   </select>
   

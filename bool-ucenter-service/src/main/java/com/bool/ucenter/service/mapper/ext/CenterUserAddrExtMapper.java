@@ -7,7 +7,7 @@ import com.bool.ucenter.core.entity.CenterUserAddr;
 public interface CenterUserAddrExtMapper {
 	
 	/**
-	 * 查找地址列表
+	 * 鏌ユ壘鐢ㄦ埛鍦板潃鍒楄〃
 	 * @param userId
 	 * @return
 	 */
@@ -15,14 +15,15 @@ public interface CenterUserAddrExtMapper {
     
     
     /**
-     * 查找默认地址
+     * 鏌ユ壘榛樿鍦板潃
      * @param userId
      * @return
      */
     CenterUserAddr findDefault(int userId);
     
+  
     /**
-     * 取消默认地址
+     * 绉婚櫎榛樿鍦板潃
      * @param userId
      */
     void clearDefault(int userId);

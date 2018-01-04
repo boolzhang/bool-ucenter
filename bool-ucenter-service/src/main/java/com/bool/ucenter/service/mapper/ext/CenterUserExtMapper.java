@@ -5,7 +5,7 @@ import com.bool.ucenter.core.entity.CenterUser;
 public interface CenterUserExtMapper {
 	
 	/**
-	 * ¸ù¾İÊÖ»úºÅÂë²éÕÒÓÃ»§
+	 * æ ¹æ®æ‰‹æœºå·æŸ¥æ‰¾ç”¨æˆ·
 	 * @param mobile
 	 * @return
 	 */
