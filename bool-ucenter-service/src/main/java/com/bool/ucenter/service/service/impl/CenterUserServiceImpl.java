@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.bool.jutils.pass.PassHandler;
 import com.bool.jutils.pass.PassInfo;
@@ -68,11 +69,7 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 		if(session.getSessionOverDue().before(new Date())) {
 			//删除会话
-			
-			UserSession example = new UserSession();
-			example.setUserId(session.getUserId());
-			userSessionRepository.delete(example);
-			
+			this.clearSession(session.getUserId());
 			throw new TokenOverdueException();
 		}
 		
@@ -194,6 +191,23 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 	}
 	
+	/**
+	 * 根据用户ID清除会话
+	 * @param userId
+	 */
+	private void clearSession(int userId) {
+		
+		List<UserSession>  list = userSessionRepository.findByUserId(userId);
+		
+		if(!CollectionUtils.isEmpty(list)) {
+			
+			for(UserSession session: list) {
+				userSessionRepository.delete(session);
+			}
+		}
+		
+	}
+	
 	
 	/**
 	 * 用户登录
@@ -310,9 +324,7 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 		
 		//删除旧的会话
-		UserSession example = new UserSession();
-		example.setUserId(user.getUserId());
-		userSessionRepository.delete(example);
+		this.clearSession(user.getUserId());
 		
 		//保存到库
 		userSessionRepository.save(session);
