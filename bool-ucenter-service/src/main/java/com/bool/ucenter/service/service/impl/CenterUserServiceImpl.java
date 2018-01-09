@@ -60,8 +60,12 @@ public class CenterUserServiceImpl implements CenterUserService {
 	public UserSession checkToken(String token) throws TokenOverdueException, Exception {
 		
 		
+		System.out.println("++++++token为："+token);
 		
 		UserSession session = userSessionRepository.findOne(token);
+		
+		
+		System.out.println("++++++session为："+session);
 		
 		if(session==null) {
 			throw new TokenOverdueException();
