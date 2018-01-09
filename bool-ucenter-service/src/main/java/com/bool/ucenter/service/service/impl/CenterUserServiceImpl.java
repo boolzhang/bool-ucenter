@@ -68,7 +68,11 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 		if(session.getSessionOverDue().before(new Date())) {
 			//删除会话
-			userSessionRepository.delete(token);
+			
+			UserSession example = new UserSession();
+			example.setUserId(session.getUserId());
+			userSessionRepository.delete(example);
+			
 			throw new TokenOverdueException();
 		}
 		
@@ -303,6 +307,12 @@ public class CenterUserServiceImpl implements CenterUserService {
 		
 		//产生会话
 		UserSession session = new UserSession(user.getUserId() , user.getMobile() , user.getNickName() , user.getAvatar());
+		
+		
+		//删除旧的会话
+		UserSession example = new UserSession();
+		example.setUserId(user.getUserId());
+		userSessionRepository.delete(example);
 		
 		//保存到库
 		userSessionRepository.save(session);
