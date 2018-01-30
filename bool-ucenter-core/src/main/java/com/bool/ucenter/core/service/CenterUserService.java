@@ -160,5 +160,13 @@ public interface CenterUserService {
 	 */
 	CenterUserAddr findDefault(int userId) throws Exception;
 	
+	/**
+	 * 查找用户绑定ID
+	 * @param userId
+	 * @param platform
+	 * @return
+	 */
+	String findBindId(int userId , ThirdPlatform platform);
+	
 	
 }

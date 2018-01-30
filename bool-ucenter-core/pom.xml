@@ -4,7 +4,7 @@
 
 	<groupId>com.bool</groupId>
 	<artifactId>bool-ucenter-core</artifactId>
-	<version>1.3</version>
+	<version>1.4</version>
 	<packaging>jar</packaging>
 
 	<name>bool-ucenter-core</name>

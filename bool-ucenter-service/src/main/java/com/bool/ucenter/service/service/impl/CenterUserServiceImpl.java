@@ -414,6 +414,11 @@ public class CenterUserServiceImpl implements CenterUserService {
 		return centerUserAddrExtMapper.findDefault(userId);
 	}
 
+	@Override
+	public String findBindId(int userId, ThirdPlatform platform) {
+		return centerUserExtMapper.findBindId(userId, platform.getValue());
+	}
+
 	
 
 	

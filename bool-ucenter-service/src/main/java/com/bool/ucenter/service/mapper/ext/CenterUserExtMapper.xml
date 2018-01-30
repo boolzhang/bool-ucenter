@@ -3,9 +3,12 @@
 <mapper namespace="com.bool.ucenter.service.mapper.ext.CenterUserExtMapper">
  
   <select id="selectByMobile" resultMap="com.bool.ucenter.service.mapper.CenterUserMapper.BaseResultMap">
-   
-  SELECT `userId`,`mobile`,`nickName`,`passwd`,`passKey`,`avatar`,`state` FROM `uc_user` WHERE `mobile`=#{mobile};
-   
+  	SELECT `userId`,`mobile`,`nickName`,`passwd`,`passKey`,`avatar`,`state` FROM `uc_user` WHERE `mobile`=#{mobile};
+  </select>
+
+  
+  <select id="findBindId" resultType="String">
+   	SELECT thirdUserId FROM `uc_bind` WHERE userId=#{userId} AND thirdPlatform=#{thirdPlatform} LIMIT 1;
   </select>
   
   

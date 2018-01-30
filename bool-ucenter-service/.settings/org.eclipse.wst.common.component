@@ -4,10 +4,7 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <dependent-module archiveName="bool-jutils-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bool-jutils/bool-jutils">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="bool-ucenter-core-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bool-ucenter-core/bool-ucenter-core">
+        <dependent-module archiveName="bool-ucenter-core-1.4.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bool-ucenter-core/bool-ucenter-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="bool-ucenter-service"/>
