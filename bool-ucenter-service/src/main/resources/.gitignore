@@ -1,0 +1,7 @@
+/applicationContext-common.xml
+/applicationContext-datasources.xml
+/applicationContext-dubbo.xml
+/applicationContext-mongodb.xml
+/jdbc.properties
+/log4j.properties
+/mongodb.properties

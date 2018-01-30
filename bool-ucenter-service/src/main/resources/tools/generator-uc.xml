@@ -4,8 +4,12 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry
-            location="C:\Users\jiaoy\.m2\repository\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar"/>
+   <classPathEntry
+		location="C:\Users\18365\.m2\repository\mysql\mysql-connector-java\5.1.40\mysql-connector-java-5.1.40.jar" />
+
+
+    
+    
     <context id="my" targetRuntime="MyBatis3">
     
     	<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>  
@@ -15,7 +19,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/uc_ucenter" userId="root"
+                        connectionURL="jdbc:mysql://localhost:3306/hb_ucenter" userId="root"
                         password="root"/>
 
         <javaModelGenerator targetPackage="com.bool.ucenter.core.entity"
