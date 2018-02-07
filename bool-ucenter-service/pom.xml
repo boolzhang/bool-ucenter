@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.bool</groupId>
 			<artifactId>bool-jutils</artifactId>
-			<version>1.0</version>
+			<version>1.11</version>
 		</dependency>
 
 		<dependency>
