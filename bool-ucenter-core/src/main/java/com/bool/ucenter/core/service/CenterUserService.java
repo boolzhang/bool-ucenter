@@ -49,8 +49,8 @@ public interface CenterUserService {
 	 * @return
 	 * @throws MobileSMSIncorrectException
 	 */
-	UserSession loginWithSMS(String mobile, String inputSms, String savedSms)
-			throws UserNotExistsException, UserDisabledException, MobileSMSIncorrectException, Exception;
+	UserSession loginWithSMS(String mobile)
+			throws UserNotExistsException, UserDisabledException, Exception;
 
 	/**
 	 * 用户注册，使用手机号码注册
@@ -62,8 +62,7 @@ public interface CenterUserService {
 	 * @return
 	 * @throws MobileAlreadyExistsException
 	 */
-	UserSession reg(String mobile, String pass, String inputSms, String savedSms)
-			throws MobileAlreadyExistsException, Exception;
+	UserSession reg(String mobile, String pass) throws MobileAlreadyExistsException, Exception;
 	
 	/**
 	 * 绑定手机号
@@ -75,7 +74,7 @@ public interface CenterUserService {
 	 * @throws MobileSMSIncorrectException
 	 * @throws Exception
 	 */
-	void bindMobile(int userId , String mobile , String inputSms , String savedSms) throws MobileAlreadyExistsException, MobileSMSIncorrectException, Exception;
+	void bindMobile(int userId , String mobile) throws MobileAlreadyExistsException, MobileSMSIncorrectException, Exception;
 
 	/**
 	 * 使用第三方平台登录；
@@ -100,8 +99,7 @@ public interface CenterUserService {
 	 * @param savedSms
 	 * @throws MobileSMSIncorrectException
 	 */
-	void resetPass(String mobile, String newPsss, String inputSms, String savedSms)
-			throws MobileSMSIncorrectException, Exception;
+	void resetPass(String mobile, String newPsss) throws MobileSMSIncorrectException, Exception;
 	
 	
 	/**

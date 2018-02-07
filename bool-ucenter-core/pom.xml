@@ -4,7 +4,7 @@
 
 	<groupId>com.bool</groupId>
 	<artifactId>bool-ucenter-core</artifactId>
-	<version>1.5</version>
+	<version>1.6</version>
 	<packaging>jar</packaging>
 
 	<name>bool-ucenter-core</name>
@@ -28,17 +28,18 @@
 			<version>4.3.12.RELEASE</version>
 		</dependency>
 
-		 <dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-mongodb</artifactId>
-        <version>1.10.9.RELEASE</version>
-    </dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+			<version>1.10.9.RELEASE</version>
+		</dependency>
 
-<dependency>
-    <groupId>org.apache.commons</groupId>
-    <artifactId>commons-lang3</artifactId>
-    <version>3.7</version>
-</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.7</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -60,20 +61,20 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	
-	<distributionManagement>  
- <repository>  
-   <id>releases</id>  
-   <name>Internal Releases</name>  
-   <url>http://120.78.217.41:8081/repository/maven-releases</url>  
- </repository>  
- <snapshotRepository>  
-   <id>Snapshots</id>  
-   <name>Internal Snapshots</name>  
-   <url>http://120.78.217.41:8081/repository/maven-snapshots</url>  
- </snapshotRepository>  
-</distributionManagement>  
+
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>Internal Releases</name>
+			<url>http://120.78.217.41:8081/repository/maven-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>Snapshots</id>
+			<name>Internal Snapshots</name>
+			<url>http://120.78.217.41:8081/repository/maven-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 
 </project>

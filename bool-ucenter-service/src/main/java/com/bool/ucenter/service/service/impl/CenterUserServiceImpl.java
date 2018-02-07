@@ -95,24 +95,15 @@ public class CenterUserServiceImpl implements CenterUserService {
 	}
 
 	@Override
-	public UserSession loginWithSMS(String mobile, String inputSms, String savedSms)
-			throws UserNotExistsException, UserDisabledException, MobileSMSIncorrectException, Exception {
-		
-		if(!inputSms.equals(savedSms)) {
-			throw new MobileSMSIncorrectException();
-		}
-		
+	public UserSession loginWithSMS(String mobile)
+			throws UserNotExistsException, UserDisabledException, Exception {
+
 		return this.userLogin(mobile, null, false);
 	}
 
 	@Override
-	public UserSession reg(String mobile, String pass, String inputSms, String savedSms)
+	public UserSession reg(String mobile, String pass)
 			throws MobileAlreadyExistsException, Exception {
-		
-		
-		if(!inputSms.equals(savedSms)) {
-			throw new MobileSMSIncorrectException();
-		}
 		
 		//保存用户并返回信息
 		CenterUser user = this.saveUser(mobile, pass, pass, null);
@@ -122,12 +113,9 @@ public class CenterUserServiceImpl implements CenterUserService {
 	}
 	
 	@Override
-	public void bindMobile(int userId, String mobile, String inputSms, String savedSms)
-			throws MobileAlreadyExistsException, MobileSMSIncorrectException, Exception {
-		if(!inputSms.equals(savedSms)) {
-			throw new MobileSMSIncorrectException();
-		}
-		
+	public void bindMobile(int userId, String mobile)
+			throws MobileAlreadyExistsException, Exception {
+
 		CenterUser user = new CenterUser();
 		user.setUserId(userId);
 		user.setMobile(mobile);
@@ -173,12 +161,8 @@ public class CenterUserServiceImpl implements CenterUserService {
 	}
 
 	@Override
-	public void resetPass(String mobile, String newPsss, String inputSms, String savedSms)
+	public void resetPass(String mobile, String newPsss)
 			throws MobileSMSIncorrectException, Exception {
-		
-		if(!inputSms.equals(savedSms)) {
-			throw new MobileSMSIncorrectException();
-		}
 		
 		CenterUser user = centerUserExtMapper.selectByMobile(mobile);
 		
