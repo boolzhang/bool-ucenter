@@ -20,4 +20,13 @@ public interface CenterUserExtMapper {
      * @return
      */
     String findBindId(@Param("userId")int userId, @Param("thirdPlatform")int thirdPlatform);
+    
+    /**
+     * 更换绑定
+     * @param thirdPlatform
+     * @param thirdUserId
+     * @param newThirdUserId
+     * @return
+     */
+    String updateBind(@Param("thirdPlatform")int thirdPlatform, @Param("thirdUserId") String thirdUserId, @Param("newThirdUserId") String newThirdUserId);
 }

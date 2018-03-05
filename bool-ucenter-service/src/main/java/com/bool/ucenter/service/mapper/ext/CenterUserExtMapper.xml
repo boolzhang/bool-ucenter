@@ -12,5 +12,9 @@
   </select>
   
   
+   <update id="updateBind">
+   	UPDATE `uc_bind` SET thirdUserId=#{newThirdUserId} WHERE thirdUserId=#{thirdUserId} AND thirdPlatform=#{thirdPlatform};
+  </update>
+  
   
 </mapper>

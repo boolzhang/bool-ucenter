@@ -166,5 +166,12 @@ public interface CenterUserService {
 	 */
 	String findBindId(int userId , ThirdPlatform platform);
 	
+	/**
+	 * 更新绑定信息
+	 * @param platform
+	 * @param thirdUserId
+	 * @param newThirdUserId
+	 */
+	void updateBind(ThirdPlatform platform, String thirdUserId, String newThirdUserId);
 	
 }
