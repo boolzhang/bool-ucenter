@@ -7,7 +7,7 @@
         <dependent-module archiveName="bool-jutils-1.11.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bool-jutils/bool-jutils">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="bool-ucenter-core-1.7.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bool-ucenter-core/bool-ucenter-core">
+        <dependent-module archiveName="bool-ucenter-core-1.8.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/bool-ucenter-core/bool-ucenter-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="bool-ucenter-service"/>

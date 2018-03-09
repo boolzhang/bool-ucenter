@@ -408,6 +408,12 @@ public class CenterUserServiceImpl implements CenterUserService {
 		centerUserExtMapper.updateBind(platform.getValue(), thirdUserId, newThirdUserId);
 	}
 
+	@Override
+	public boolean checkHasBind(String thirdUserId, ThirdPlatform platform) {
+		
+		return centerUserExtMapper.countBindId(thirdUserId, platform.getValue())>0;
+	}
+
 	
 
 	

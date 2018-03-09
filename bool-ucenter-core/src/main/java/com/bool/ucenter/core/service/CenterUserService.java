@@ -174,4 +174,11 @@ public interface CenterUserService {
 	 */
 	void updateBind(ThirdPlatform platform, String thirdUserId, String newThirdUserId);
 	
+	/**
+	 * 校验是否有绑定关系
+	 * @param openId
+	 * @param platform
+	 * @return
+	 */
+	boolean checkHasBind(String openId, ThirdPlatform platform);
 }

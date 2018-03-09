@@ -16,5 +16,9 @@
    	UPDATE `uc_bind` SET thirdUserId=#{newThirdUserId} WHERE thirdUserId=#{thirdUserId} AND thirdPlatform=#{thirdPlatform};
   </update>
   
+  <select id="countBindId" resultType="int">
+   	SELECT COUNT(0) FROM `uc_bind` WHERE thirdUserId=#{thirdUserId} AND thirdPlatform=#{thirdPlatform};
+  </select>
+  
   
 </mapper>

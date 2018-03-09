@@ -22,6 +22,16 @@ public interface CenterUserExtMapper {
     String findBindId(@Param("userId")int userId, @Param("thirdPlatform")int thirdPlatform);
     
     /**
+     * 查找第三方用户ID
+     * @param userId
+     * @param thirdPlatform
+     * @return
+     */
+    int countBindId(@Param("thirdUserId")String thirdUserId, @Param("thirdPlatform")int thirdPlatform);
+    
+    
+    
+    /**
      * 更换绑定
      * @param thirdPlatform
      * @param thirdUserId
