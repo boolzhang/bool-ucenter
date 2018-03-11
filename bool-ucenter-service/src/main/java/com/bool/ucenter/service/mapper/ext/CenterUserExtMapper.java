@@ -38,5 +38,5 @@ public interface CenterUserExtMapper {
      * @param newThirdUserId
      * @return
      */
-    String updateBind(@Param("thirdPlatform")int thirdPlatform, @Param("thirdUserId") String thirdUserId, @Param("newThirdUserId") String newThirdUserId);
+    void updateBind(@Param("thirdPlatform")int thirdPlatform, @Param("thirdUserId") String thirdUserId, @Param("newThirdUserId") String newThirdUserId);
 }
