@@ -410,12 +410,8 @@ public class CenterUserServiceImpl implements CenterUserService {
 
 	@Override
 	public boolean checkHasBind(String thirdUserId, ThirdPlatform platform) {
-		
 		return centerUserExtMapper.countBindId(thirdUserId, platform.getValue())>0;
 	}
-
-	
-
 	
 
 }

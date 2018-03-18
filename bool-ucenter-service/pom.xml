@@ -12,7 +12,7 @@
 		<repository>
 			<id>releases</id>
 			<name>Internal Releases</name>
-			<url>http://120.78.217.41:8081/repository/maven-releases</url>
+			<url>http://nexus.youximiji.com/repository/maven-releases</url>
 		</repository>
 	</repositories>
 	
